@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
+app.use(require('stylus').middleware({src: __dirname + '/app/public'}));
 app.use(express.static(__dirname + '/app/public'));
 //MongoDB
 var dbHost = process.env.DB_HOST || 'localhost';
@@ -34,6 +35,7 @@ app.use(session({
 	})
 );
 
+require('./app/server/routes')(app);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Serving up greatness at: ' + app.get('port'));
